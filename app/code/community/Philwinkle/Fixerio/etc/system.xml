@@ -1,8 +1,26 @@
 <?xml version="1.0"?>
-<!-- Remove this file if your module does not have a system configuration interface -->
 <config>
-    <tabs>
-    </tabs>
     <sections>
+        <currency translate="label" module="directory">
+            <groups>
+                <fixerio translate="label">
+                    <label>Fixer.io</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <timeout translate="label">
+                            <label>Connection Timeout in Seconds</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </timeout>
+                    </fields>
+                </fixerio>
+            </groups>
+        </currency>
     </sections>
 </config>
