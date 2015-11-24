@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Philwinkle_Fixerio>
+             <active>true</active>
+             <codePool>community</codePool>
+             <depends>
+             	<Mage_Directory/>
+             </depends>
+        </Philwinkle_Fixerio>
+    </modules>
+</config>

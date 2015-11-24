@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!-- Remove this file if your module does not have a system configuration interface -->
+<config>
+    <tabs>
+    </tabs>
+    <sections>
+    </sections>
+</config>
