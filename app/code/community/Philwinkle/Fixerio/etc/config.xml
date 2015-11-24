@@ -8,6 +8,16 @@
     <admin>
     </admin>
     <global>
+        <currency>
+            <import>
+                <services>
+                    <fixerio>
+                        <name>Fixer.io</name>
+                        <model>fixerio/import</model>
+                    </fixerio>
+                </services>
+            </import>
+        </currency>
         <models>
             <fixerio>
                 <class>Philwinkle_Fixerio_Model</class>
