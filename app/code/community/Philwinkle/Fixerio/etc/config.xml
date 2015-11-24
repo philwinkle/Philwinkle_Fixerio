@@ -30,4 +30,11 @@
             </fixerio>
         </helpers>
     </global>
+    <defaults>
+        <currency>
+            <fixerio>
+                <timeout>60</timeout>
+            </fixerio>
+        </currency>
+    </defaults>
 </config>
