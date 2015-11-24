@@ -23,56 +23,11 @@
                 <class>Philwinkle_Fixerio_Model</class>
                 <resourceModel>fixerio_entity</resourceModel>
             </fixerio>
-            <fixerio_entity>
-                <class>Philwinkle_Fixerio_Model_Entity</class>
-                <entities>
-                </entities>
-            </fixerio_entity>
         </models>
-        <blocks>
-            <fixerio>
-                <class>Philwinkle_Fixerio_Block</class>
-            </fixerio>
-        </blocks>
         <helpers>
             <fixerio>
                 <class>Philwinkle_Fixerio_Helper</class>
             </fixerio>
         </helpers>
-        <resources>
-            <philwinkle_fixerio_setup>
-                <setup>
-                    <module>Philwinkle_Fixerio</module>
-                    <class>Philwinkle_Fixerio_Model_Entity_Setup</class>
-                </setup>
-            </philwinkle_fixerio_setup>
-        </resources>
     </global>
-    <adminhtml>
-    </adminhtml>
-    <frontend>
-        <events></events>
-        <routers></routers>
-        <translate>
-            <modules>
-                <Philwinkle_Fixerio>
-                    <files>
-                        <default>Philwinkle_Fixerio.csv</default>
-                    </files>
-                </Philwinkle_Fixerio>
-            </modules>
-        </translate>
-        <layout></layout>
-    </frontend>
-    <default>
-        <fixerio>
-        </fixerio>
-    </default>
-    <phpunit>
-        <suite>
-            <modules>
-                 <Philwinkle_Fixerio />
-            </modules>
-        </suite>
-    </phpunit>
 </config>
