@@ -2,9 +2,8 @@
 
 class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Import_Abstract
 {
-    protected $_url = 'http://api.fixer.io/latest?base={{CURRENCY_FROM}}&symbols={{CURRENCY_TO}}';
+    protected $_url = 'http://api.fixer.io/latest?base=%1$s&symbols=%2$s';
 	protected $_messages = array();
-
 
      /**
      * HTTP client
@@ -18,10 +17,9 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
         $this->_httpClient = new Varien_Http_Client();
     }
 
-    protected function _convert($currencyFrom, $currencyTo, $retry=0)
+    protected function _convert($currencyFrom, $currencyTo, $retry = 0)
     {
-        $url = str_replace('{{CURRENCY_FROM}}', $currencyFrom, $this->_url);
-        $url = str_replace('{{CURRENCY_TO}}', $currencyTo, $url);
+        $url = sprintf($this->_url, $currencyFrom, $currencyTo);
 
         try {
             $response = $this->_httpClient
