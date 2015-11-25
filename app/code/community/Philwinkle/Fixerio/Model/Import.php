@@ -44,9 +44,10 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
             return (float) $rate;
         } catch (Exception $e) {
             if( $retry == 0 ) {
-                $this->_convert($currencyFrom, $currencyTo, 1);
+                return $this->_convert($currencyFrom, $currencyTo, 1);
             } else {
                 $this->_messages[] = Mage::helper('directory')->__('Cannot retrieve rate from %s.', $url);
+                return null;
             }
         }
     }
