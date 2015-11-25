@@ -28,18 +28,21 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
                 ->request('GET')
                 ->getBody();
 
-
             $converted = json_decode($response);
+            $rate = $converted->rates->$currencyTo;
 
-            $xml = new SimpleXmlElement("<double>{$converted->rates->$currencyTo}</double>");
-
-            if( !$xml ) {
+            if(!$rate) {
                 $this->_messages[] = Mage::helper('directory')->__('Cannot retrieve rate from %s.', $url);
                 return null;
             }
-            return (float) $xml;
-        }
-        catch (Exception $e) {
+            
+            //test for bcmath to retain precision
+            if(function_exists('bcadd')){
+                return bcadd($rate, '0', 12);
+            }
+
+            return (float) $rate;
+        } catch (Exception $e) {
             if( $retry == 0 ) {
                 $this->_convert($currencyFrom, $currencyTo, 1);
             } else {
@@ -48,4 +51,3 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
         }
     }
 }
-
