@@ -1,0 +1,16 @@
+{
+  "name": "philwinkle/fixerio",
+  "license": "MIT",
+  "type": "magento-module",
+  "description": "This module adds the Fixer.io webservice to the list of available currency conversion webservices in Magento.",
+  "require": {
+    "magento-hackathon/magento-composer-installer": "*"
+  },
+  "authors": [
+    {
+      "name": "Phillip Jackson",
+      "email": "philwinkle@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev"
+}
