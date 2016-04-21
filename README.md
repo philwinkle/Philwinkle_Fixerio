@@ -1,7 +1,11 @@
+###### For the Magento 2 Fixer.io integration see my repo over here: [https://github.com/philwinkle/Philwinkle_Fixerio-M2](https://github.com/philwinkle/Philwinkle_Fixerio-M2)
+
+
 Philwinkle_Fixerio
 ==
 
 This module adds the Fixer.io webservice to the list of available currency conversion webservices in Magento. 
+
 
 
 Enable
