@@ -5,8 +5,6 @@
              <version>0.2.0</version>
         </Philwinkle_Fixerio>
     </modules>
-    <admin>
-    </admin>
     <global>
         <currency>
             <import>
@@ -21,7 +19,6 @@
         <models>
             <fixerio>
                 <class>Philwinkle_Fixerio_Model</class>
-                <resourceModel>fixerio_entity</resourceModel>
             </fixerio>
         </models>
         <helpers>
