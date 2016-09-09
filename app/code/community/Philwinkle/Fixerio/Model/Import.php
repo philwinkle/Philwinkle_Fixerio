@@ -2,7 +2,7 @@
 
 class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Import_Abstract
 {
-    protected $_url = 'http://api.fixer.io/latest?base=%1$s&symbols=%2$s';
+    protected $_url = 'https://api.fixer.io/latest?base=%1$s&symbols=%2$s';
     protected $_messages = array();
 
      /**
@@ -35,7 +35,7 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
                 $this->_messages[] = Mage::helper('directory')->__('Cannot retrieve rate from %s.', $url);
                 return null;
             }
-            
+
             // test for bcmath to retain precision
             if (function_exists('bcadd')) {
                 return bcadd($rate, '0', 12);
