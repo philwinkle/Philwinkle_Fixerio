@@ -2,7 +2,7 @@
 
 class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Import_Abstract
 {
-    protected $_url = 'https://api.fixer.io/latest?base=%1$s&symbols=%2$s';
+    protected $_url = 'https://data.fixer.io/api/latest?access_key=YOUR_ACCESS_KEY&base=%1$s&symbols=%2$s';
     protected $_messages = array();
 
      /**
