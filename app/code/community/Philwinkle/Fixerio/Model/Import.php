@@ -20,6 +20,12 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
     protected function _convert($currencyFrom, $currencyTo, $retry = 0)
     {
         $url = sprintf($this->_url, $currencyFrom, $currencyTo);
+        
+        $access_key = Mage::getStoreConfig('currency/fixerio/access_key');
+        
+        if ( $access_key != "" ) {
+            $url .= "&access_key=" . $access_key;
+        }
 
         try {
             $response = $this->_httpClient
