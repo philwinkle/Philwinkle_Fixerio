@@ -31,6 +31,7 @@
         <currency>
             <fixerio>
                 <timeout>60</timeout>
+                <access_key></access_key>
             </fixerio>
         </currency>
     </default>
