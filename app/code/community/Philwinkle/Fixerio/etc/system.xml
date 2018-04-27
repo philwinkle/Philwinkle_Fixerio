@@ -20,6 +20,7 @@
                         </timeout>
                         <access_key translate="label">
                             <label>API Access Key from fixer.io</label>
+                            <comment><![CDATA[Sign up for a free account at <a href="https://fixer.io/signup/free" target="_blank">Fixer.io</a>]]></comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
