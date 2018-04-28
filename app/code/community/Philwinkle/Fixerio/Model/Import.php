@@ -1,9 +1,17 @@
 <?php
+/**
+ * Fixer.io Import Rates
+ *
+ */
 
+/**
+ * Philwinkle_Fixerio_Model_Import class
+ *
+ * @category    Philwinkle
+ * @package     Philwinkle_Fixerio
+ */
 class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Import_Abstract
 {
-
-    const RATE_PRECISION = 5;
 
     protected $_url = 'http://data.fixer.io/api/latest';
     protected $_messages = array();
@@ -38,17 +46,13 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
     }
 
     /**
-     * _getApiUrl
+     * getEndpointUrl
      *
      * @return string
      */
-    protected function _getApiUrl()
+    public function getEndpointUrl()
     {
-        if (!$this->_getConfigAccessKey()) {
-            return false;
-        }
-
-        return $this->_url . '?access_key=' . $this->_getConfigAccessKey() . '&symbols=%1$s,%2$s';
+        return $this->_url;
     }
 
     /**
@@ -58,41 +62,49 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
      * @param string $currencyTo
      * @param int    $retry
      *
-     * @return float|null|string
+     * @return float|null
      */
     protected function _convert($currencyFrom, $currencyTo, $retry = 0)
     {
 
-        if (!$url = sprintf($this->_getApiUrl(), $currencyFrom, $currencyTo)) {
+        $queryParams = array(
+            'access_key' => $this->_getConfigAccessKey(),
+            'symbols'    => implode(',', array($currencyFrom, $currencyTo))
+        );
+
+        if (!$queryParams['access_key']) {
             return null;
         }
 
         try {
+            $url = Mage::helper('core/url')->addRequestParam($this->getEndpointUrl(), $queryParams);
+
             $response = $this->_httpClient
                 ->setUri($url)
                 ->setConfig(array('timeout' => Mage::getStoreConfig('currency/fixerio/timeout')))
                 ->request('GET')
                 ->getBody();
 
-            $converted = Mage::helper('core')->jsonDecode($response);
+            /** Second parameter is objectDecodeType - Zend_Json::TYPE_ARRAY, or Zend_Json::TYPE_OBJECT */
+            $converted = Mage::helper('core')->jsonDecode($response, Zend_Json::TYPE_ARRAY);
 
             if (isset($converted['success'])) {
                 if (!$converted['success']) {
-                    $this->_messages[] =
-                        Mage::helper('directory')->__('Api Returned Error: %s', $converted['error']['info']);
+                    $this->_messages[] = Mage::helper('directory')->__('Api Error: %s', $converted['error']['info']);
                     Mage::throwException($converted['error']['info']);
                 }
 
-                $rates = $converted['rates'];
-                if (isset($rates[$currencyTo], $rates[$currencyFrom])) {
-                    $rate = round($rates[$currencyTo] / $rates[$currencyFrom], self::RATE_PRECISION);
+                if (isset($converted['rates']) && $rates = $converted['rates']) {
+                    if (isset($rates[$currencyTo], $rates[$currencyFrom])) {
+                        $rate = $rates[$currencyTo] / $rates[$currencyFrom];
 
-                    // test for bcmath to retain precision
-                    if (function_exists('bcadd')) {
-                        return bcadd($rate, '0', 12);
+                        // test for bcmath to retain precision
+                        if (function_exists('bcadd')) {
+                            return bcadd($rate, '0', 12);
+                        }
+
+                        return (float) $rate;
                     }
-
-                    return (float) $rate;
                 }
 
                 Mage::throwException('Error fetching currency rates from API response');
@@ -104,7 +116,6 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
             }
 
             $this->_messages[] = Mage::helper('directory')->__('Cannot retrieve rate from %s.', $url);
-            return null;
         }
 
         return null;
