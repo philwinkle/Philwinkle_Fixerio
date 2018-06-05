@@ -21,7 +21,8 @@
                         <access_key translate="label">
                             <label>API Access Key from fixer.io</label>
                             <comment><![CDATA[Sign up for a free account at <a href="https://fixer.io/signup/free" target="_blank">Fixer.io</a>]]></comment>
-                            <frontend_type>text</frontend_type>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
