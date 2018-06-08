@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Philwinkle_Fixerio>
-             <version>0.3.0</version>
+             <version>0.4.1</version>
         </Philwinkle_Fixerio>
     </modules>
     <global>
