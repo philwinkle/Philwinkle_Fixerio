@@ -83,7 +83,7 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
                 ->setUri($url)
                 ->setConfig(array('timeout' => Mage::getStoreConfig('currency/fixerio/timeout')))
                 ->request('GET')
-                ->getBody();
+                ->getRowBody();
 
             /** Second parameter is objectDecodeType - Zend_Json::TYPE_ARRAY, or Zend_Json::TYPE_OBJECT */
             $converted = Mage::helper('core')->jsonDecode($response, Zend_Json::TYPE_ARRAY);
