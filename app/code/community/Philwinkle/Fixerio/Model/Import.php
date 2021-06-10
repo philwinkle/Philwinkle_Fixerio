@@ -8,9 +8,9 @@
 //For older Magento versions, this model extends the abstract class directly, as there is no Magento implementation
 //to extend
 if (class_exists('Mage_Directory_Model_Currency_Import_Fixerio')) {
-    class Philwinkle_Fixerio_Model_Import_Base extends Mage_Directory_Model_Currency_Import_Fixerio {}
+    abstract class Philwinkle_Fixerio_Model_Import_Base extends Mage_Directory_Model_Currency_Import_Fixerio {}
 } else {
-    class Philwinkle_Fixerio_Model_Import_Base extends Mage_Directory_Model_Currency_Import_Abstract {}
+    abstract class Philwinkle_Fixerio_Model_Import_Base extends Mage_Directory_Model_Currency_Import_Abstract {}
 }
 
 /**
