@@ -4,17 +4,25 @@
  *
  */
 
+//For Magento 1.9.4.3+ this model will extend Magento's implementation, which in turn extends the abstract class
+//For older Magento versions, this model extends the abstract class directly, as there is no Magento implementation
+//to extend
+if (class_exists('Mage_Directory_Model_Currency_Import_Fixerio')) {
+    class Philwinkle_Fixerio_Model_Import_Base extends Mage_Directory_Model_Currency_Import_Fixerio {}
+} else {
+    class Philwinkle_Fixerio_Model_Import_Base extends Mage_Directory_Model_Currency_Import_Abstract {}
+}
+
 /**
  * Philwinkle_Fixerio_Model_Import class
  *
  * @category    Philwinkle
  * @package     Philwinkle_Fixerio
  */
-class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Import_Abstract
+class Philwinkle_Fixerio_Model_Import extends Philwinkle_Fixerio_Model_Import_Base
 {
-
     protected $_url = 'http://data.fixer.io/api/latest';
-    protected $_messages = array();
+    protected $_messages = [];
 
     /**
      * HTTP client
@@ -119,5 +127,4 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
 
         return null;
     }
-
 }
