@@ -10,11 +10,20 @@
  * @category    Philwinkle
  * @package     Philwinkle_Fixerio
  */
-class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Import_Abstract
+class Philwinkle_Fixerio_Model_Import extends Philwinkle_Fixerio_Model_Base
 {
+    /**
+     * XML path to Fixer.IO timeout setting
+     */
+    const XML_PATH_FIXERIO_TIMEOUT = 'currency/fixerio/timeout';
+
+    /**
+     * XML path to Fixer.IO API key setting
+     */
+    const XML_PATH_FIXERIO_API_KEY = 'currency/fixerio/api_key';
 
     protected $_url = 'http://data.fixer.io/api/latest';
-    protected $_messages = array();
+    protected $_messages = [];
 
     /**
      * HTTP client
@@ -29,23 +38,6 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
     }
 
     /**
-     * _getConfigAccessKey
-     *
-     * @return bool|mixed
-     */
-    protected function _getConfigAccessKey()
-    {
-        if ($accessKey = Mage::helper('core')->decrypt(Mage::getStoreConfig('currency/fixerio/access_key'))) {
-            return $accessKey;
-        }
-
-        $this->_messages[] = Mage::helper('directory')
-            ->__('Fixer.io access key missing.  Please obtain access key from fixer.io.');
-
-        return false;
-    }
-
-    /**
      * getEndpointUrl
      *
      * @return string
@@ -53,6 +45,12 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
     public function getEndpointUrl()
     {
         return $this->_url;
+    }
+
+    public function fetchRates()
+    {
+        //Make sure to disable Magento's implementation by invoking the implementation in the abstract class
+        return Mage_Directory_Model_Currency_Import_Abstract::fetchRates();
     }
 
     /**
@@ -66,7 +64,6 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
      */
     protected function _convert($currencyFrom, $currencyTo, $retry = 0)
     {
-
         $queryParams = array(
             'access_key' => $this->_getConfigAccessKey(),
             'symbols'    => implode(',', array($currencyFrom, $currencyTo))
@@ -81,7 +78,7 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
 
             $response = $this->_httpClient
                 ->setUri($url)
-                ->setConfig(array('timeout' => Mage::getStoreConfig('currency/fixerio/timeout')))
+                ->setConfig(array('timeout' => Mage::getStoreConfig(self::XML_PATH_FIXERIO_TIMEOUT)))
                 ->request('GET')
                 ->getBody();
 
@@ -112,7 +109,7 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
         } catch (Exception $e) {
             Mage::logException($e);
             if ($retry === 0) {
-                return $this->_convert($currencyFrom, $currencyTo, 1);
+                return $this->_convert($currencyFrom, $currencyTo, $retry + 1);
             }
 
             $this->_messages[] = Mage::helper('directory')->__('Cannot retrieve rate from %s.', $url);
@@ -121,4 +118,21 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
         return null;
     }
 
+    /**
+     * _getConfigAccessKey
+     *
+     * @return bool|mixed
+     */
+    protected function _getConfigAccessKey()
+    {
+        $accessKey = Mage::helper('core')->decrypt(Mage::getStoreConfig(self::XML_PATH_FIXERIO_API_KEY));
+        if ($accessKey) {
+            return $accessKey;
+        }
+
+        $this->_messages[] = Mage::helper('directory')
+            ->__('Fixer.io access key missing. Please obtain it from fixer.io.');
+
+        return false;
+    }
 }

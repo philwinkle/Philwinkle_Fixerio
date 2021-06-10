@@ -10,7 +10,7 @@
             <import>
                 <services>
                     <fixerio>
-                        <name>Fixer.io</name>
+                        <name>Fixer.IO</name>
                         <model>fixerio/import</model>
                     </fixerio>
                 </services>
@@ -20,6 +20,15 @@
             <fixerio>
                 <class>Philwinkle_Fixerio_Model</class>
             </fixerio>
+            <directory>
+                <rewrite>
+                    <!--
+                    In Magento versions 1.9.4.3+ this module's implementation rewrites Magento's one, in case someone
+                    tries to get an instance of that model directly
+                    -->
+                    <currency_import_fixerio>Philwinkle_Fixerio_Model_Import</currency_import_fixerio>
+                </rewrite>
+            </directory>
         </models>
         <helpers>
             <fixerio>
@@ -30,8 +39,9 @@
     <default>
         <currency>
             <fixerio>
-                <timeout>60</timeout>
-                <access_key></access_key>
+                <timeout>100</timeout>
+                <api_key backend_model="adminhtml/system_config_backend_encrypted"/>
+                <active>1</active>
             </fixerio>
         </currency>
     </default>
