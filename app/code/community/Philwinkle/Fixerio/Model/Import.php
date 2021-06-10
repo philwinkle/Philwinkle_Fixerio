@@ -35,7 +35,7 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
      */
     protected function _getConfigAccessKey()
     {
-        if ($accessKey = Mage::helper('core')->decrypt(Mage::getStoreConfig('currency/fixerio/access_key'))) {
+        if ($accessKey = Mage::helper('core')->decrypt(Mage::getStoreConfig('currency/fixerio/api_key'))) {
             return $accessKey;
         }
 
@@ -66,7 +66,6 @@ class Philwinkle_Fixerio_Model_Import extends Mage_Directory_Model_Currency_Impo
      */
     protected function _convert($currencyFrom, $currencyTo, $retry = 0)
     {
-
         $queryParams = array(
             'access_key' => $this->_getConfigAccessKey(),
             'symbols'    => implode(',', array($currencyFrom, $currencyTo))
