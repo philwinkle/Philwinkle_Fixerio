@@ -118,7 +118,7 @@ class Philwinkle_Fixerio_Model_Import extends Philwinkle_Fixerio_Model_Import_Ba
         } catch (Exception $e) {
             Mage::logException($e);
             if ($retry === 0) {
-                return $this->_convert($currencyFrom, $currencyTo, 1);
+                return $this->_convert($currencyFrom, $currencyTo, $retry + 1);
             }
 
             $this->_messages[] = Mage::helper('directory')->__('Cannot retrieve rate from %s.', $url);
