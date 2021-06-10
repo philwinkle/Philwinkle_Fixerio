@@ -63,6 +63,12 @@ class Philwinkle_Fixerio_Model_Import extends Philwinkle_Fixerio_Model_Import_Ba
         return $this->_url;
     }
 
+    public function fetchRates()
+    {
+        //Make sure to disable Magento's implementation by invoking the implementation in the abstract class
+        return Mage_Directory_Model_Currency_Import_Abstract::fetchRates();
+    }
+
     /**
      * _convert
      *
